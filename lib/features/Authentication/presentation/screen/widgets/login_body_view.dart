@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:technical_assessment_task/core/utils/app_colors.dart';
 import 'package:technical_assessment_task/core/utils/app_routers_strings.dart';
+import 'package:technical_assessment_task/core/widgets/responsive_center.dart';
 import 'package:technical_assessment_task/features/Authentication/presentation/manager/cubit/cubit/auth_cubit.dart';
 import 'package:technical_assessment_task/features/Authentication/presentation/screen/widgets/Custom_Button.dart';
 import 'package:technical_assessment_task/features/Authentication/presentation/screen/widgets/Custom_headline_Text.dart';
@@ -75,97 +76,123 @@ class _LoginBodyViewState extends State<LoginBodyView> {
         return Form(
           key: formKey,
           autovalidateMode: autovalidateMode,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 100),
-                  Center(
-                    child: Image.asset('assets/pen_PNG7435.png', width: 100),
+          child: SingleChildScrollView(
+            child: ResponsiveCenter(
+            maxWidth: 480,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.fromLTRB(
+                    16,
+                    MediaQuery.of(context).padding.top + 40,
+                    16,
+                    32,
                   ),
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.center,
-                    child: CustomText(
-                      text: "Welcome To Task Manager App",
-                      size: 24,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(32),
+                      bottomRight: Radius.circular(32),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Please sign in with your mail',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: AppColors.white,
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w300,
-                        height: 1.12,
-                        letterSpacing: -0.17,
+                  child: Column(
+                    children: [
+                      Image.asset('assets/pen_PNG7435.png', width: 90),
+                      const SizedBox(height: 20),
+                      const Text(
+                        "Welcome To Task Manager App",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 3),
-                  CustomText(text: "Email", size: 18),
-                  const SizedBox(height: 24),
-                  CustomTextFormField(
-                    controller: emailController,
-                    hintText: 'Enter your email',
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 30),
-                  CustomText(text: "Password", size: 18),
-                  const SizedBox(height: 24),
-                  CustomTextFormField(
-                    controller: passwordController,
-                    hintText: 'Password',
-                    obscureText: change,
-                    keyboardType: TextInputType.visiblePassword,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        change ? Icons.visibility : Icons.visibility_off,
+                      const SizedBox(height: 12),
+                      Text(
+                        'Please sign in with your mail',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.9),
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w300,
+                          height: 1.12,
+                          letterSpacing: -0.17,
+                        ),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          change = !change;
-                        });
-                      },
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: CustomText(
-                      text: "Forget Password !",
-                      size: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 32),
+                      CustomText(text: "Email", size: 18),
+                      const SizedBox(height: 24),
+                      CustomTextFormField(
+                        controller: emailController,
+                        hintText: 'Enter your email',
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 30),
+                      CustomText(text: "Password", size: 18),
+                      const SizedBox(height: 24),
+                      CustomTextFormField(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        obscureText: change,
+                        keyboardType: TextInputType.visiblePassword,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            change ? Icons.visibility : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              change = !change;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: CustomText(
+                          text: "Forget Password !",
+                          size: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      const SizedBox(height: 56),
+                      CustomButton(
+                        text: 'Login',
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            FocusScope.of(context).unfocus(); // ⬅️ يقفل الكيبورد
+                            context.read<AuthCubit>().signin(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                          } else {
+                            setState(() {
+                              autovalidateMode = AutovalidateMode.always;
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 32),
+                      const CreateAccountText(),
+                      const SizedBox(height: 32),
+                    ],
                   ),
-                  const SizedBox(height: 56),
-                  CustomButton(
-                    text: 'Login',
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        FocusScope.of(context).unfocus(); // ⬅️ يقفل الكيبورد
-                        context.read<AuthCubit>().signin(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
-                      } else {
-                        setState(() {
-                          autovalidateMode = AutovalidateMode.always;
-                        });
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 32),
-                  const CreateAccountText(),
-                ],
-              ),
+                ),
+              ],
+            ),
             ),
           ),
         );

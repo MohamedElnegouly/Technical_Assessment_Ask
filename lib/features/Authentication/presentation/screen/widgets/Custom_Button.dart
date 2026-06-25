@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.white, // Green1-600
+          backgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
             fontSize: 20,
             fontFamily: 'poppins',
             fontWeight: FontWeight.w600,
-            color: AppColors.primary,
+            color: Colors.white,
           ),
         ),
       ),

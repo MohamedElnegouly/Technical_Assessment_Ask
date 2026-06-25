@@ -43,11 +43,11 @@ class CustomTextFormField extends StatelessWidget {
       },
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
-        fillColor: AppColors.white,
+        fillColor: Colors.white,
         filled: true,
         hintText: hintText,
         hintStyle: TextStyle(
-          color: AppColors.primary,
+          color: AppColors.primary.withValues(alpha: 0.7),
           fontSize: 17,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w600,
@@ -57,9 +57,9 @@ class CustomTextFormField extends StatelessWidget {
 
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
-        border: borderDecoration(AppColors.primary),
-        focusedBorder: borderDecoration(AppColors.white),
-        enabledBorder: borderDecoration(AppColors.white),
+        border: borderDecoration(AppColors.primary.withValues(alpha: 0.3)),
+        focusedBorder: borderDecoration(AppColors.primary),
+        enabledBorder: borderDecoration(AppColors.primary.withValues(alpha: 0.3)),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 20,
           horizontal: 16,

@@ -1,6 +1,5 @@
 class Apitoken {
-  static const String addToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjhhYTQ1NDIxZGM1NTM5ZTk4NzNjYSIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjgwNTU0ODc1LCJleHAiOjE2ODgzMzA4NzV9.b_lKInOun7NFORc_XKuddTE_cK7oM6TuouhRi0bv0LI';
-  static const String deleteToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYmFhNjRiMzk5NDYzMjE3NjEyMWZmZSIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc4MjMxNzA2LCJleHAiOjE2ODYwMDc3MDZ9.OxP2pS-D8ub3wk-CCQabA2GtBXaUEvHMnYwOe6XNyEA';
-  static const String getToken ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjhhYTQ1NDIxZGM1NTM5ZTk4NzNjYSIsIm5hbWUiOiJBaG1lZCBBYmQgQWwtTXV0aSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjgwNTU0ODc1LCJleHAiOjE2ODgzMzA4NzV9.b_lKInOun7NFORc_XKuddTE_cK7oM6TuouhRi0bv0LI';
-  static const String baseUrl = "https://ecommerce.routemisr.com/api/v1/";
+  // Use 10.0.2.2 for the Android emulator, or your machine's LAN IP for a
+  // physical device. Run the mock backend in /backend (npm install && npm start).
+  static const String baseUrl = "http://10.0.2.2:3000/api/";
 }

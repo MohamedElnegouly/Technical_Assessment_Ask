@@ -3,7 +3,10 @@ import 'package:technical_assessment_task/core/utils/apitoken.dart';
 
 class ApiService {
   final Dio _dio;
-  ApiService(this._dio);
+  ApiService(this._dio) {
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
+  }
   final String _baseUrl = Apitoken.baseUrl;
   Future<Map<String, dynamic>> get({
     required String endPoint,

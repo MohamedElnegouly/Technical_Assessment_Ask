@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:technical_assessment_task/core/utils/app_colors.dart';
 import 'package:technical_assessment_task/features/Authentication/presentation/screen/widgets/Custom_headline_Text.dart';
 
 class LoginText extends StatelessWidget {
@@ -22,7 +23,8 @@ class LoginText extends StatelessWidget {
           child: CustomText(
             text: "login",
             size: 18,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w700,
+            color: AppColors.primary,
           ),
         ),
       ],
