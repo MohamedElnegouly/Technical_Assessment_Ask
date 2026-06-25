@@ -18,7 +18,7 @@ class CustomText extends StatelessWidget {
       text,
       textAlign:TextAlign.start,
       style: TextStyle(
-        color: AppColors.white,
+        color : AppColors.darkBlue,
         fontSize: size.toDouble(),
         fontFamily: 'Poppins',
         fontWeight: fontWeight ?? FontWeight.w600,

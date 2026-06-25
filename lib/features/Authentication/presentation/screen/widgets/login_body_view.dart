@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive/hive.dart';
 import 'package:technical_assessment_task/core/utils/app_colors.dart';
 import 'package:technical_assessment_task/core/utils/app_routers_strings.dart';
 import 'package:technical_assessment_task/features/Authentication/presentation/manager/cubit/cubit/auth_cubit.dart';
@@ -32,7 +33,7 @@ class _LoginBodyViewState extends State<LoginBodyView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (context, state) async{
         if (state is AuthLoading) {
           showDialog(
             context: context,
@@ -49,9 +50,13 @@ class _LoginBodyViewState extends State<LoginBodyView> {
             context,
           ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         } else if (state is AuthSuccess) {
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context); // ⬅️ يقفل اللودر
-          }
+      final box = Hive.box('authBox');
+      await box.put('token', state.response.token);
+
+      if (context.mounted) {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               shape: BeveledRectangleBorder(
@@ -63,8 +68,9 @@ class _LoginBodyViewState extends State<LoginBodyView> {
             ),
           );
           context.go(AppRoutersStrings.home);
+      }
         }
-      },
+        },
       builder: (context, state) {
         return Form(
           key: formKey,
@@ -75,9 +81,11 @@ class _LoginBodyViewState extends State<LoginBodyView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 100),
                   Center(
-                    child: Image.asset('assets/pen_PNG7435.png', width: 250),
+                    child: Image.asset('assets/pen_PNG7435.png', width: 100),
                   ),
+                  const SizedBox(height: 20),
                   Align(
                     alignment: Alignment.center,
                     child: CustomText(

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -57,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if (Navigator.canPop(context)) Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-               shape: BeveledRectangleBorder(
+              shape: BeveledRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
               backgroundColor: AppColors.darkBlue,
@@ -80,12 +79,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 100),
                     Center(
-                      child: Image.asset(
-                        'assets/pen_PNG7435.png',
-                        width: 250,
-                      ),
+                      child: Image.asset('assets/pen_PNG7435.png', width: 100),
                     ),
+                    const SizedBox(height: 20),
                     CustomText(text: "Full Name", size: 18),
                     const SizedBox(height: 24),
                     CustomTextFormField(

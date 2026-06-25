@@ -24,6 +24,7 @@ class CreateAccountText extends StatelessWidget {
             size: 18,
             fontWeight: FontWeight.w500,
           ),
+
         ),
       ],
     );

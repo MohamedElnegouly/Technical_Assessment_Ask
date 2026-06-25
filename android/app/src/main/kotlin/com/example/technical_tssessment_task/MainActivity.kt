@@ -1,4 +1,4 @@
-package com.example.technical_tssessment_task
+package com.example.technical_assessment_task
 
 import io.flutter.embedding.android.FlutterActivity
 

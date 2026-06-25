@@ -8,22 +8,21 @@ import 'package:technical_assessment_task/features/Authentication/data/model/aut
 import 'package:technical_assessment_task/features/Authentication/presentation/manager/cubit/cubit/auth_cubit.dart';
 
 void main() async {
-  // ✅ تأكد إن Flutter جاهز لتحميل أي async dependencies
   WidgetsFlutterBinding.ensureInitialized();
-   // ✅ init Hive
-  await Hive.initFlutter();
-
-  // ✅ register adapters
-  Hive.registerAdapter(AuthModelAdapter());
-  Hive.registerAdapter(UserModelAdapter());
-
-  // ✅ open user box
-  await Hive.openBox<AuthModel>('userBox');
-
-  setupServiceLocator();
+  
+  try {
+    await Hive.initFlutter();
+    Hive.registerAdapter(AuthModelAdapter());
+    Hive.registerAdapter(UserModelAdapter());
+    await Hive.openBox<AuthModel>('userBox');
+    await Hive.openBox('authBox');
+    setupServiceLocator();
+  } catch (e) {
+    debugPrint('ERROR: $e');
+  }
+  
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
