@@ -16,11 +16,13 @@ class CustomText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final defaultColor = isDark ? Colors.white.withValues(alpha: 0.92) : AppColors.darkBlue;
     return Text(
       text,
       textAlign:TextAlign.start,
       style: TextStyle(
-        color : color ?? AppColors.darkBlue,
+        color : color ?? defaultColor,
         fontSize: size.toDouble(),
         fontFamily: 'Poppins',
         fontWeight: fontWeight ?? FontWeight.w600,

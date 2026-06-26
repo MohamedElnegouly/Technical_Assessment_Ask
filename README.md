@@ -6,6 +6,28 @@ A Flutter Task Manager app built for the Electro Pi Flutter Mobile Developer tec
 
 Users can register/login, browse a list of projects fetched from the API, drill into a project to see and manage its tasks (mark as done, add new tasks), and view/edit their profile (logout).
 
+## Screenshots
+
+### Light mode
+
+| Splash | Login | Register | Projects |
+|---|---|---|---|
+| ![Splash](screenshots/splash.png) | ![Login](screenshots/login.png) | ![Register](screenshots/register.png) | ![Projects](screenshots/projects.png) |
+
+| Project Details | Add Task | Profile |
+|---|---|---|
+| ![Project Details](screenshots/project_details.png) | ![Add Task](screenshots/add_task.png) | ![Profile Light](screenshots/profile_light.png) |
+
+### Dark mode
+
+| Login | Register | Projects |
+|---|---|---|
+| ![Login Dark](screenshots/login_dark.png) | ![Register Dark](screenshots/register_dark.png) | ![Projects Dark](screenshots/projects_dark.png) |
+
+| Project Details | Add Task | Profile |
+|---|---|---|
+| ![Project Details Dark](screenshots/project_details_dark.png) | ![Add Task Dark](screenshots/add_task_dark.png) | ![Profile Dark](screenshots/profile_dark.png) |
+
 ## Tech Stack
 
 | Category | Technology |
