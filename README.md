@@ -40,7 +40,7 @@ Users can register/login, browse a list of projects fetched from the API, drill 
 | Dependency Injection | get_it |
 | Navigation | go_router |
 | Architecture | Clean Architecture (data / presentation layers per feature) |
-| Backend | Node.js + Express (in `/backend`) |
+| Backend | Node.js + Express + MongoDB (Atlas), deployed serverless on Vercel |
 
 ## Architecture
 
@@ -81,15 +81,35 @@ Each feature keeps UI, state management (Cubit), and data (repo + API calls) in 
 
 ## Getting Started
 
-### 1. Run the backend (mock API)
+### 1. Run the app (uses the live backend — no setup needed)
+
+`lib/core/utils/apitoken.dart` already points at the deployed backend:
+
+```
+https://task-manager-backend-ngoly.vercel.app/api/
+```
+
+So you can just:
+
+```bash
+flutter pub get
+flutter run
+```
+
+and log in / register straight away — no server to start.
+
+### 2. (Optional) Run the backend locally instead
+
+The backend lives in `/backend` here for reference, and is also published as its own repo for deployment: [task-manager-backend](https://github.com/MohamedElnegouly/task-manager-backend).
 
 ```bash
 cd backend
 npm install
+cp .env.example .env   # then fill in MONGODB_URI with your own MongoDB Atlas connection string
 npm start
 ```
 
-The server starts on `http://localhost:3000` and exposes:
+It exposes:
 
 - `POST /api/auth/signup` — `{ name, email, password }`
 - `POST /api/auth/signin` — `{ email, password }`
@@ -98,22 +118,13 @@ The server starts on `http://localhost:3000` and exposes:
 - `POST /api/projects/:projectId/tasks` — `{ title, priority }`
 - `PATCH /api/tasks/:taskId` — `{ status }`
 
-Data is in-memory (resets on restart) and seeded with 3 sample projects and 5 sample tasks.
+Data is persisted in MongoDB and auto-seeded with 3 sample projects and 5 sample tasks the first time the `projects` collection is empty.
 
-### 2. Point the Flutter app at the backend
+If you point the app at a local instance instead of the deployed one, update `lib/core/utils/apitoken.dart`'s `baseUrl`:
 
-`lib/core/utils/apitoken.dart` sets `baseUrl`:
-
-- Android emulator: `http://10.0.2.2:3000/api/` (default, already set)
+- Android emulator: `http://10.0.2.2:3000/api/`
 - iOS simulator: `http://localhost:3000/api/`
 - Physical device: `http://<your-machine-LAN-IP>:3000/api/`
-
-### 3. Run the app
-
-```bash
-flutter pub get
-flutter run
-```
 
 ## Dependencies
 
@@ -121,6 +132,8 @@ See `pubspec.yaml`. Key packages: `flutter_bloc`, `bloc`, `dio`, `dartz`, `get_i
 
 ## Notes on Implementation
 
-- A real REST API (Node/Express) was built instead of using `jsonplaceholder` because the spec's data shape (projects with status, tasks with status + priority) doesn't map cleanly onto jsonplaceholder's resources — a purpose-built API keeps the contract exact and lets task status updates (`PATCH`) actually persist server-side for the session.
+- A real REST API (Node/Express) was built instead of using `jsonplaceholder` because the spec's data shape (projects with status, tasks with status + priority) doesn't map cleanly onto jsonplaceholder's resources — a purpose-built API keeps the contract exact and lets task status updates (`PATCH`) actually persist correctly.
+- The backend is deployed as a serverless function on **Vercel** (no card required for the Hobby tier) and persists data in **MongoDB Atlas** (free M0 cluster) rather than in-memory arrays — in-memory state doesn't survive across serverless invocations, since each request can hit a different warm/cold function instance. `backend/db.js` caches the Mongo connection and a one-time seed check across warm invocations to avoid reconnecting/reseeding on every request.
+- The backend also lives in its own standalone repo ([task-manager-backend](https://github.com/MohamedElnegouly/task-manager-backend)) so Vercel can deploy it directly without needing the rest of this Flutter repo.
 - JWT is stored in a Hive box (`authBox`) and read by `GoRouter`'s `redirect` to decide the initial route and guard auth-only pages.
 - Error handling: all repository calls catch `DioException` and map it to a `Failure` with a user-facing message (`lib/core/errors/failure.dart`), surfaced via Cubit states and shown as retryable error views / snackbars.
