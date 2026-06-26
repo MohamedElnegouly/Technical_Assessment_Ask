@@ -31,6 +31,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Projects'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.person_outline),
@@ -42,11 +43,14 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         child: BlocBuilder<ProjectsCubit, ProjectsState>(
           builder: (context, state) {
             if (state is ProjectsLoading) {
-              return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              );
             } else if (state is ProjectsError) {
               return ErrorView(
                 message: state.errorMessage,
-                onRetry: () => context.read<ProjectsCubit>().loadProjects(token: _token),
+                onRetry: () =>
+                    context.read<ProjectsCubit>().loadProjects(token: _token),
               );
             }
 
@@ -54,7 +58,8 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
             return RefreshIndicator(
               color: AppColors.primary,
-              onRefresh: () => context.read<ProjectsCubit>().loadProjects(token: _token),
+              onRefresh: () =>
+                  context.read<ProjectsCubit>().loadProjects(token: _token),
               child: projects.isEmpty
                   ? ListView(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -73,8 +78,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                         final project = projects[index];
                         return ProjectCard(
                           project: project,
-                          onTap: () =>
-                              context.push('/projectDetails/${project.id}', extra: project.title),
+                          onTap: () => context.push(
+                            '/projectDetails/${project.id}',
+                            extra: project.title,
+                          ),
                         );
                       },
                     ),

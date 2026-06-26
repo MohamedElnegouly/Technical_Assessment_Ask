@@ -11,6 +11,7 @@ import 'package:technical_assessment_task/features/Projects/presentation/manager
 import 'package:technical_assessment_task/features/Projects/presentation/manager/cubit/tasks_cubit.dart';
 import 'package:technical_assessment_task/features/Projects/presentation/screens/project_details_screen.dart';
 import 'package:technical_assessment_task/features/Projects/presentation/screens/projects_screen.dart';
+import 'package:technical_assessment_task/features/Splash/presentation/screens/splash_screen.dart';
 
 CustomTransitionPage<void> _slideTransitionPage({
   required GoRouterState state,
@@ -34,10 +35,11 @@ CustomTransitionPage<void> _slideTransitionPage({
 
 class AppRouters {
   static final router = GoRouter(
-    initialLocation: Hive.box('authBox').get('token') != null
-        ? AppRoutersStrings.home
-        : AppRoutersStrings.login,
+    initialLocation: AppRoutersStrings.splash,
     redirect: (context, state) {
+      final isOnSplash = state.matchedLocation == AppRoutersStrings.splash;
+      if (isOnSplash) return null; // splash decides where to go itself
+
       final token = Hive.box('authBox').get('token');
       final isOnLogin = state.matchedLocation == AppRoutersStrings.login;
       final isOnRegister = state.matchedLocation == AppRoutersStrings.register;
@@ -55,6 +57,10 @@ class AppRouters {
       return null; // خليه يكمل عادي
     },
     routes: [
+      GoRoute(
+        path: AppRoutersStrings.splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: AppRoutersStrings.login,
         builder: (context, state) => const LoginScreen(),

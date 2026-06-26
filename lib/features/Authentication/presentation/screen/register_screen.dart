@@ -22,7 +22,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   final nameController = TextEditingController();
-  final phoneController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   bool change = true;
@@ -30,7 +29,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     nameController.dispose();
-    phoneController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -125,14 +123,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           keyboardType: TextInputType.text,
                         ),
                         const SizedBox(height: 30),
-                        CustomText(text: "Mobile Number", size: 18),
-                        const SizedBox(height: 24),
-                        CustomTextFormField(
-                          controller: phoneController,
-                          hintText: 'Enter your mobile number',
-                          keyboardType: TextInputType.phone,
-                        ),
-                        const SizedBox(height: 30),
                         CustomText(text: "E-mail address", size: 18),
                         const SizedBox(height: 24),
                         CustomTextFormField(
@@ -169,7 +159,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 name: nameController.text.trim(),
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
-                                phone: phoneController.text.trim(),
                               );
                             } else {
                               setState(() {

@@ -42,6 +42,12 @@ class CustomTextFormField extends StatelessWidget {
         }
       },
       obscureText: obscureText ?? false,
+      style: const TextStyle(
+        color: AppColors.darkBlue,
+        fontSize: 17,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.w500,
+      ),
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,

@@ -17,7 +17,6 @@ class AuthCubit extends Cubit<AuthState> {
     required String name,
     required String email,
     required String password,
-    required String phone,
   }) async {
     emit(AuthLoading());
 
@@ -25,7 +24,6 @@ class AuthCubit extends Cubit<AuthState> {
       name: name,
       email: email,
       password: password,
-      phone: phone,
     );
 
     result.fold(
@@ -60,8 +58,10 @@ class AuthCubit extends Cubit<AuthState> {
   }
    
    Future<void> clearUserData() async {
-    final box = Hive.box<AuthModel>('userBox');
-    await box.clear();
+    final userBox = Hive.box<AuthModel>('userBox');
+    await userBox.clear();
+    final authBox = Hive.box('authBox');
+    await authBox.delete('token');
   }
 
  Future<void> logout(BuildContext context) async {

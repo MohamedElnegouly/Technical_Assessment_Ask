@@ -14,7 +14,6 @@ class AuthRepoImpl implements AuthRepo {
     required String name,
     required String email,
     required String password,
-    required String phone,
   }) async {
     try {
       final response = await apiService.post(
